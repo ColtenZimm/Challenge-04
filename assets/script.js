@@ -1,34 +1,31 @@
-
-
-
-  console.log("fire")
-  var quizQuestions = [
-    {
-      question: "Which statement calls the class green?",
-      choices: ["document.getElementbyld('green)", "document.querySelector('green')", "document.querySelector('#green')", "window.document.querySelector('.green')"],
-      answer: "document.querySelector('green')"
-    },
-    {
-      question: "Which comparitive operator means if a is true and b is true otherwise, false?",
-      choices: ["&&", "!==", "==", "==="],
-      answer: "&&"
-    }
-  ];
-
-  var currentQuestionIndex = 0;
-  var timeLeft=50;
-  var timeEl = document.getElementById("timer");
-  var timer;
-  function startQuiz() {
-    timer = setInterval(startTimer, 1000);
-    timeEl.textContent = timeLeft
-    showQuestion()
+console.log("fire")
+var quizQuestions = [
+  {
+    question: "Which statement calls the class green?",
+    choices: ["document.getElementbyld('green)", "document.querySelector('green')", "document.querySelector('#green')", "window.document.querySelector('.green')"],
+    answer: "document.querySelector('green')"
+  },
+  {
+    question: "Which comparitive operator means if a is true and b is true otherwise, false?",
+    choices: ["&&", "!==", "==", "==="],
+    answer: "&&"
   }
-  function startTimer() {
-    timeLeft--;
-    timeEl.textContent = timeLeft
-    console.log(timeLeft);
-  }
+];
+
+var currentQuestionIndex = 0;
+var timeLeft = 50;
+var timeEl = document.getElementById("timer");
+var timer;
+function startQuiz() {
+  timer = setInterval(startTimer, 1000);
+  timeEl.textContent = timeLeft
+  showQuestion()
+}
+function startTimer() {
+  timeLeft--;
+  timeEl.textContent = timeLeft
+  console.log(timeLeft);
+}
 
 function showQuestion() {
   var currentQuestion = quizQuestions[currentQuestionIndex]
@@ -63,7 +60,8 @@ function checkAnswer(event) {
   }
 }
 function endQuiz() {
-  clearInterval(timerInterval);
+  clearInterval(timer);
+  var score = timeLeft;
   var quizContainer = document.getElementById('quiz-container');
   quizContainer.innerHTML = `<h2>All done!</h2>
       <p>Your final score is ${score}</p>
@@ -79,10 +77,9 @@ function saveScore() {
   window.location.href = 'highscores.html';
 }
 
-document.addEventListener("DOMContentLoaded", (event) => {
+
   var startbtn = document.querySelector('#start-btn');
   startbtn.addEventListener('click', function () {
     console.log("FIRE")
     startQuiz();
   });
-});
