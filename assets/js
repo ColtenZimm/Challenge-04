@@ -1,0 +1,64 @@
+const startBtn = document.getElementById('start-btn');
+startBtn.addEventListener('click', startQuiz);
+
+function startQuiz() 
+
+const quizQuestions = [
+  {
+    question: "What is the capital of France?",
+    choices: ["London", "Paris", "Madrid", "Rome"],
+    answer: "Paris"
+  },
+  {
+    question: "What is the largest organ in the human body?",
+    choices: ["Liver", "Skin", "Heart", "Lungs"],
+    answer: "Skin"
+  }
+];
+function showQuestion(question) {
+    const questionEl = document.getElementById('question');
+    const choicesEl = document.getElementById('choices');
+    questionEl.textContent = question.question;
+    choicesEl.innerHTML = '';
+    question.choices.forEach(choice => {
+      const button = document.createElement('button');
+      button.textContent = choice;
+      button.classList.add('choice');
+      button.addEventListener('click', checkAnswer);
+      choicesEl.appendChild(button);
+    });
+  }
+  function checkAnswer(event) {
+    const selectedBtn = event.target;
+    const selectedAnswer = selectedBtn.textContent;
+    const currentQuestion = quizQuestions[currentQuestionIndex];
+    if (selectedAnswer === currentQuestion.answer) {
+      // answer is correct, move to the next question
+      currentQuestionIndex++;
+      if (currentQuestionIndex >= quizQuestions.length) {
+        endQuiz();
+      } else {
+        showQuestion(quizQuestions[currentQuestionIndex]);
+      }
+    } else {
+      // answer is incorrect, subtract time from the clock
+      timeLeft -= 10;
+    }
+  }
+  function endQuiz() {
+    clearInterval(timerInterval);
+    const quizContainer = document.getElementById('quiz-container');
+    quizContainer.innerHTML = `<h2>All done!</h2>
+      <p>Your final score is ${score}</p>
+      <label for="initials">Enter initials:</label>
+      <input type="text" id="initials" />
+      <button id="submit">Submit</button>`;
+    const submitBtn = document.getElementById('submit');
+    submitBtn.addEventListener('click', saveScore);
+  }
+  function saveScore() {
+    const initials = document.getElementById('initials').value;
+    localStorage.setItem('quiz-score', JSON.stringify({ initials, score }));
+    window.location.href = 'highscores.html';
+  }
+  
