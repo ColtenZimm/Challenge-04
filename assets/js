@@ -1,20 +1,23 @@
-const startBtn = document.getElementById('start-btn');
-startBtn.addEventListener('click', startQuiz);
+document.addEventListener("DOMContentLoaded", (event) => {
+  const startBtn = document.getElementById('start-btn');
+  startBtn.addEventListener('click', startQuiz);
+});
 
-function startQuiz() 
+function startQuiz() {
 
 const quizQuestions = [
   {
-    question: "What is the capital of France?",
-    choices: ["London", "Paris", "Madrid", "Rome"],
-    answer: "Paris"
+    question: "Which statement calls the class green?",
+    choices: ["document.getElementbyld('green)", "document.querySelector('green')", "document.querySelector('#green')", "window.document.querySelector('.green')"],
+    answer: "document.querySelector('green')"
   },
   {
-    question: "What is the largest organ in the human body?",
-    choices: ["Liver", "Skin", "Heart", "Lungs"],
-    answer: "Skin"
+    question: "Which comparitive operator means if a is true and b is true otherwise, false?",
+    choices: ["&&", "!==", "==", "==="],
+    answer: "&&"
   }
 ];
+}
 function showQuestion(question) {
     const questionEl = document.getElementById('question');
     const choicesEl = document.getElementById('choices');
@@ -61,4 +64,3 @@ function showQuestion(question) {
     localStorage.setItem('quiz-score', JSON.stringify({ initials, score }));
     window.location.href = 'highscores.html';
   }
-  
