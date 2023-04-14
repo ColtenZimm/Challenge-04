@@ -1,12 +1,7 @@
-document.addEventListener("DOMContentLoaded", (event) => {
-  var startbtn = document.querySelector('#start-btn');
-  startbtn.addEventListener('click', function() {
-    startQuiz();
-  });
-});
 
-function startQuiz() {
 
+
+  console.log("fire")
   var quizQuestions = [
     {
       question: "Which statement calls the class green?",
@@ -19,26 +14,43 @@ function startQuiz() {
       answer: "&&"
     }
   ];
-}
-function showQuestion(question) {
+
+  var currentQuestionIndex = 0;
+  var timeLeft=50;
+  var timeEl = document.getElementById("timer");
+  var timer;
+  function startQuiz() {
+    timer = setInterval(startTimer, 1000);
+    timeEl.textContent = timeLeft
+    showQuestion()
+  }
+  function startTimer() {
+    timeLeft--;
+    timeEl.textContent = timeLeft
+    console.log(timeLeft);
+  }
+
+function showQuestion() {
+  var currentQuestion = quizQuestions[currentQuestionIndex]
   var questionEl = document.getElementById('question');
   var choicesEl = document.getElementById('choices');
-  questionEl.textContent = question.question;
+  questionEl.textContent = currentQuestion.question;
   choicesEl.innerHTML = '';
-  question.choices.forEach(choice => {
+  for (var i = 0; i < currentQuestion.choices.length; i++) {
+    var choice = currentQuestion.choices[i]
     var button = document.createElement('button');
     button.textContent = choice;
     button.classList.add('choice');
     button.addEventListener('click', checkAnswer);
     choicesEl.appendChild(button);
-  });
+  };
 }
 function checkAnswer(event) {
   var selectedBtn = event.target;
   var selectedAnswer = selectedBtn.textContent;
   var currentQuestion = quizQuestions[currentQuestionIndex];
   if (selectedAnswer === currentQuestion.answer) {
-    
+
     currentQuestionIndex++;
     if (currentQuestionIndex >= quizQuestions.length) {
       endQuiz();
@@ -66,3 +78,11 @@ function saveScore() {
   localStorage.setItem('quiz-score', JSON.stringify({ initials, score }));
   window.location.href = 'highscores.html';
 }
+
+document.addEventListener("DOMContentLoaded", (event) => {
+  var startbtn = document.querySelector('#start-btn');
+  startbtn.addEventListener('click', function () {
+    console.log("FIRE")
+    startQuiz();
+  });
+});
