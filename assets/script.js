@@ -71,15 +71,28 @@ function endQuiz() {
   var submitBtn = document.getElementById('submit');
   submitBtn.addEventListener('click', saveScore);
 }
-function saveScore() {
-  var initials = document.getElementById('initials').value;
-  localStorage.setItem('quiz-score', JSON.stringify({ initials, score }));
-  window.location.href = 'highscores.html';
-}
-
 
   var startbtn = document.querySelector('#start-btn');
   startbtn.addEventListener('click', function () {
     console.log("FIRE")
     startQuiz();
   });
+
+  // Assume these are the values you want to save
+let initials = "initials";
+let score = 100;
+
+// Call this function when the game is over
+function saveScore() {
+  // Get the existing high scores from localStorage, or create an empty array if none exist
+  let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+  // Add the current score and initials to the high scores array
+  highScores.push({initials: initials, score: score});
+
+  // Sort the high scores array by score (highest to lowest)
+  highScores.sort((a, b) => b.score - a.score);
+
+  // Save the high scores back to localStorage
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+}
