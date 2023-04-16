@@ -77,13 +77,13 @@ function endQuiz() {
     console.log("FIRE")
     startQuiz();
   });
-
-  // Assume these are the values you want to save
-let initials = "initials";
-let score = 100;
-
-// Call this function when the game is over
+var score = timeLeft;
+ // Call this function when the game is over and the user wants to save their score
 function saveScore() {
+  // Get the user's initials from the input field
+  let initialsInput = document.getElementById("initialsInput");
+  let initials = initialsInput.value;
+
   // Get the existing high scores from localStorage, or create an empty array if none exist
   let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
